@@ -861,7 +861,7 @@ i.iconfont {
     --color-mode: "dark";
   }
   :root:not([data-user-color-scheme]) {
-    --body-bg-color: #181c27;
+    --body-bg-color: #141a33;
     --board-bg-color: #252d38;
     --text-color: #c4c6c9;
     --sec-text-color: #a7a9ad;
@@ -899,7 +899,7 @@ i.iconfont {
 }
 @media not print {
   [data-user-color-scheme="dark"] {
-    --body-bg-color: #181c27;
+    --body-bg-color: #141a33;
     --board-bg-color: #252d38;
     --text-color: #c4c6c9;
     --sec-text-color: #a7a9ad;
@@ -2235,4 +2235,7 @@ input[type=checkbox] {
   .link-text:only-child {
     margin-left: 1rem;
   }
+}
+.vpower.txt-right {
+  display: none;
 }
