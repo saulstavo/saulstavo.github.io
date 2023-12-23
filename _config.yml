@@ -104,3 +104,10 @@ deploy:
   type: git
   repo: https://github.com/saulstavo/saulstavo.github.io.git
   branch: master
+
+# plugin
+# hexo-admin authentification
+admin:
+  username: saulstavo
+  password_hash: $2a$10$cLhmLkJ4.q8zsUU8bQZ2T.c7gHwYf/c7TspscG0VMXMuSe6jWOWli
+  secret: this is a key to encrypt cookies
