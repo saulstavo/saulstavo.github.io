@@ -18,11 +18,13 @@
 
 # 用于浏览器标签的图标
 # Icon for browser tab
-favicon: /img/fluid.png
+# favicon: /img/fluid.png
+favicon: /img/cat.png
 
 # 用于苹果设备的图标
 # Icon for Apple touch
-apple_touch_icon: /img/fluid.png
+# apple_touch_icon: /img/fluid.png
+apple_touch_icon: /img/cat.png
 
 # 浏览器标签页中的标题分隔符，效果： 文章名 - 站点名
 # Title separator in browser tab, eg: article - site
@@ -426,7 +428,7 @@ footer:
   #   <i class="iconfont icon-love"></i>
   #   <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
   # '
-  content: 'Constructed by Saulstavo ©'
+  content: 'Constructed by © Saulstavo'
   # 展示网站的 PV、UV 统计数
   # Display website PV and UV statistics
   statistics:
@@ -792,7 +794,7 @@ valine:
   appKey: tsXAVg0ffH5Jg71GrYB7K8o1
   path: window.location.pathname
   placeholder: '评论时输入邮箱（仅作者可见）以接收回复'
-  avatar: 'mp'
+  avatar: ''
   meta: ['nick', 'mail']
   requiredFields: ['nick']
   pageSize: 10
