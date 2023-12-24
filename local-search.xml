@@ -4,11 +4,11 @@
   
   
   <entry>
-    <title>post</title>
-    <link href="/2023/12/23/%E7%AC%AC%E4%B8%80%E7%AF%87%EF%BC%9A%E5%85%B3%E4%BA%8E%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/"/>
-    <url>/2023/12/23/%E7%AC%AC%E4%B8%80%E7%AF%87%EF%BC%9A%E5%85%B3%E4%BA%8E%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</url>
+    <title>博客开篇：关于这座岛</title>
+    <link href="/2023/12/23/post/"/>
+    <url>/2023/12/23/post/</url>
     
-    <content type="html"><![CDATA[<p>这是第一篇文章，记录该博客的出现。  </p><h5 id="1"><a href="#1" class="headerlink" title="1"></a>1</h5><p>离那个时代越来越远，社交网络中的人越来越多，多数从未见过，部分一面之缘。</p><p>科技的发展令人赞叹，但变得飞快的不只有高铁的速度，还有人们的生活。现在学习叫速成，咖啡叫续命，上班叫996，旅行叫特种兵。上学为了分数，上班为了赚钱，人们匆忙地走过一切，然后再匆忙地走向另一切，为了完成一个目标，然后再完成另一个。  </p><h5 id="2"><a href="#2" class="headerlink" title="2"></a>2</h5><p>曾经的个人博客撑起了互联网内容，没有功利，没有资本，没有套路，没有大公司。慢慢地，纯粹的沉淀开始打不过短平快，博客逐渐没落。  </p><p>我并不反对两个时代的差异，我接受并拥抱今天的一切。那么为什么要搭建这个博客，原因之一是最近几天闲着没事干，恰好对此有些兴趣，故进行尝试。  </p><p>此外，我常常一时想不起过去的某段时间我都干了些什么，我也常常忘记曾经查过的某个函数该怎么用，希望自己闲来无事时在此进行记录，成篇的内容归纳在一起，方便浏览。如果还能给来到这里的旅行者带来一点趣味，也是这座孤岛存在的价值。  </p><h5 id="3"><a href="#3" class="headerlink" title="3"></a>3</h5><p>现在是2023年12月23日下午5点27分，朋友们应该即将结束第一天的考试，希望他们顺利。</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="博客开篇：关于这座岛"><a href="#博客开篇：关于这座岛" class="headerlink" title="博客开篇：关于这座岛"></a>博客开篇：关于这座岛</h2><p>这是第一篇文章，记录该博客的出现。  </p><h5 id="1"><a href="#1" class="headerlink" title="1"></a>1</h5><p>离那个时代越来越远，社交网络中的人越来越多，多数从未见过，部分一面之缘。</p><p>科技的发展令人赞叹，但变得飞快的不只有高铁的速度，还有人们的生活。现在学习叫速成，咖啡叫续命，上班叫996，旅行叫特种兵。上学为了分数，上班为了赚钱，人们匆忙地走过一切，然后再匆忙地走向另一切，为了完成一个目标，然后再完成另一个。  </p><h5 id="2"><a href="#2" class="headerlink" title="2"></a>2</h5><p>曾经的个人博客撑起了互联网内容，没有功利，没有资本，没有套路，没有大公司。慢慢地，纯粹的沉淀开始打不过短平快，博客逐渐没落。  </p><p>我并不反对两个时代的差异，我接受并拥抱今天的一切。那么为什么要搭建这个博客，原因之一是最近几天闲着没事干，恰好对此有些兴趣，故进行尝试。  </p><p>此外，我常常一时想不起过去的某段时间我都干了些什么，我也常常忘记曾经查过的某个函数该怎么用，希望自己闲来无事时在此进行记录，成篇的内容归纳在一起，方便浏览。如果还能给来到这里的旅行者带来一点趣味，也是这座孤岛存在的价值。  </p><h5 id="3"><a href="#3" class="headerlink" title="3"></a>3</h5><p>现在是2023年12月23日下午5点27分，朋友们应该即将结束第一天的考试，希望他们顺利。</p>]]></content>
     
     
     
@@ -22,19 +22,6 @@
     <url>/2023/12/23/Test/</url>
     
     <content type="html"><![CDATA[<h3 id="a"><a href="#a" class="headerlink" title="a"></a>a</h3><p>This is a test article.</p>]]></content>
-    
-    
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="/2023/12/20/hello-world/"/>
-    <url>/2023/12/20/hello-world/</url>
-    
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
     
     
     
