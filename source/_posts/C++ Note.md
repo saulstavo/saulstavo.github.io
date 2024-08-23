@@ -111,25 +111,25 @@ else {
 * 子串
 ```c++
 // 提取子字符串
-std::string sub = str.substr(pos, 3);     // 从位置 pos 开始，提取 3 个字符
+std::string sub = str.substr(pos, 3); // 从位置 pos 开始，提取 3 个字符
 std::cout << "Substring extracted: " << sub << std::endl;
 ```
 * 替换
 ```c++
 // 替换字符串中的某些部分
-str.replace(pos, 3, "Java");             // 用 "Java" 替换 "C++"
+str.replace(pos, 3, "Java"); // 用 "Java" 替换 "C++"
 std::cout << "String after replace: " << str << std::endl;
 ```
 * 插入
 ```c++
 // 在指定位置插入字符串
-str.insert(7, "beautiful ");             // 在位置 7 插入 "beautiful "
+str.insert(7, "beautiful "); // 在位置 7 插入 "beautiful "
 std::cout << "String after insert: " << str << std::endl;
 ```
 * 删除
 ```c++
 // 删除字符串中的某些部分
-str.erase(7, 10);                         // 从位置 7 开始，删除 10 个字符
+str.erase(7, 10); // 从位置 7 开始，删除 10 个字符
 std::cout << "String after erase: " << str << std::endl;
 ```
 * 获取长度
@@ -141,7 +141,7 @@ std::cout << "String length: " << str.size() << std::endl;
 ```c++
 // 比较两个字符串
 std::string str2 = "Hello, World!";
-int result = str.compare(str2);    //此函数的功能和C语言的strcmp（）一样，但用法有差异
+int result = str.compare(str2); //此函数的功能和C语言的strcmp（）一样，但用法有差异
 if (result == 0) {
     std::cout << "str is equal to str2" << std::endl;
 } 
@@ -157,7 +157,7 @@ else
 * 追加
 ```c++
 // 在字符串末尾追加内容
-str.append(" Welcome!");     //此函数实现得有些冗余，其实+=和这个函数实现的效果完全一样（个人更喜欢用+= 简单）
+str.append(" Welcome!"); //此函数实现得有些冗余，其实+=和这个函数实现的效果完全一样（个人更喜欢用+= 简单）
 std::cout << "String after append: " << str << std::endl;
 ```
 
