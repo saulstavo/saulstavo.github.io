@@ -160,7 +160,16 @@ else
 str.append(" Welcome!"); //此函数实现得有些冗余，其实+=和这个函数实现的效果完全一样（个人更喜欢用+= 简单）
 std::cout << "String after append: " << str << std::endl;
 ```
-
+* 使用迭代器遍历/修改
+迭代器的底层还是指针  
+```c++
+// 修改字符串中的字符
+for (string::iterator it = str.begin(); it != str.end(); ++it) {
+    if (*it == 'C') {
+        *it = 'D';  // 修改 'C' 为 'D'
+    }
+}
+```
 
 
 
