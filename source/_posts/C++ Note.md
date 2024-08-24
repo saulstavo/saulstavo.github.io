@@ -170,6 +170,8 @@ for (string::iterator it = str.begin(); it != str.end(); ++it) {
     }
 }
 ```
+#### set和unordered_set
+类似于map和unordered_map，set底层是红黑树，查找插入删除效率O(logn)，unordered_set底层是哈希表，查找插入删除效率O(1).  
 
 
 
