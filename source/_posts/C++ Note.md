@@ -173,6 +173,33 @@ for (string::iterator it = str.begin(); it != str.end(); ++it) {
 #### set和unordered_set
 类似于map和unordered_map，set底层是红黑树，查找插入删除效率O(logn)，unordered_set底层是哈希表，查找插入删除效率O(1).  
 
+#### stack
+std::stack<int> stk(10, 0); // 创建一个包含10个0的stack
+
+int top = stk.top(); // 获取stack顶部的元素
+
+bool empty = stk.empty(); // 检查stack是否为空
+
+stk.push(42); // 在stack的顶部添加一个元素
+
+stk.push(42); // 在stack的顶部添加一个元素
+
+stk.pop(); // 删除stack顶部的元素
+
+stk.top() = 42; // 修改stack顶部的元素
+
+bool contains = stk.contains(42); // 检查stack中是否包含值为42的元素
+
+stk.sort(); // 默认根据元素值进行升序排序
+
+size_t size = stk.size(); // 获取stack中的元素数量
+
+size_t capacity = stk.capacity(); // 获取stack的容量
+
+#### vector
+
+
+
 
 
 
