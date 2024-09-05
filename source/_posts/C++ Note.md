@@ -198,10 +198,140 @@ size_t capacity = stk.capacity(); // 获取stack的容量
 
 #### vector
 
+* 复制
+vector<T> v2(v1); //v2中包含v1所有元素的副本
+vector<T> v2=v1; //等价于v2(v1)
 
+* 初始化定义
+vector<int> a(10, 1) ; //定义一个初始大小为 10 且初始值都为 1 的向量
 
+v.size() //返回向量v中的元素个数
 
+v.empty() //若v中不包含任何元素，返回真；否则返回假
 
+v.push_back(t) //向v的尾端添加一个值为t的元素
+
+v.front() //访问v的第一个元素
+
+v.back() //访问v的最后一个元素
+
+push_back() //把传送为参数的对象添加到vector的尾部
+
+pop_back() //删除vector尾最后一个元素
+
+v.erase(v.begin()) //将起始位置的元素删除
+
+v.erase(v.begin(), v.begin()+3) //将(v.begin(), v.begin()+3)之间的3个元素删除
+
+v.erase(v.begin() + 3) //删除第4个元素
+
+clear() //清除所有元素
+
+insert() //插入一个或多个对象
+
+v.insert(v.begin(), 1000); //将1000插入到向量v的起始位置前
+
+v.insert(v.begin() + 1,9); //在第二个位置插入新元素
+
+v.insert(v.begin(), 3, 1000) //位置0开始，连续插入3个1000
+
+v.insert(v.begin()+1, 7,8) //位置1开始，连续插入7个8
+
+#### string
+1. 在字符串指定位置插入字符
+```c++
+string s = "123";
+    s.insert(0,"@");//第一个参数是插入的位置下标，第二个是插入的字符串
+    s.insert(1,"###");
+cout << s << endl;
+```
+输出：@###123
+
+2. 删除字符串中的所有指定字符
+```c++
+int i=s.find(x);
+ while(i!=string::npos)//-1
+ {
+     s.erase(i,x.length());
+     i=s.find(x);
+ }
+string& erase(size_t pos=0, size_t len = npos);
+```
+
+其中，参数pos表示要删除字符串的起始位置，其默认值是0；len表示要删除字符串的长度，其默认值是string::npos。返回值是删除后的字符串。
+
+3. 替换字符串中的所有指定字符
+法一、for循环直接赋值
+```c++
+for(int k=0;k<s.length();k++)
+     if(s[k]==x)
+         s[k]=y;
+ cout<<"Replace->"<<s<<endl;
+```
+法二、algorithm里面的replace函数
+```c++
+string s = "121145";
+    //char a = '1';
+    replace(s.begin(), s.end(), '1', '#');
+    cout << s << endl;
+```
+4. 输出字符串的长度
+s.length();
+s.size();
+
+5. 反转输出字符串（这一步仅输出，不改变字符串）
+法一、for循环输出
+```c++
+for(int k=s.length()-1;k>=0;k--)
+     cout<<s[k];
+ cout<<endl;
+```
+法二、reverse函数
+```c++
+string s2(s1);
+reverse(s2.begin(), s2.end());//头文件是不是也在算法里面？
+cout << s2 << endl;
+```
+
+6、输出字符串从位置i到j的子串
+法一、for循环
+cin>>i>>j;
+cout<<"Sub->";
+for(int k=i;k<=j;k++)
+     cout<<s[k];
+ cout<<endl;
+
+法二、substr函数
+int a, b;
+cin >> a;
+cin >> b;
+
+string t = s1.substr(a, b-a+1);
+cout<<"Sub->";
+cout << t << endl;
+7、匹配子串，输出首次匹配到子串的第一个字符位置
+法一、手动输出-1
+cin>>st;//string st
+if(s.find(st)!=string::npos)
+     cout<<"Find->"<<s.find(st)<<endl;
+else
+     cout<<"Find->-1"<<endl;
+cout<<endl;
+
+法二、find没匹配到会自己变成-1
+string a;
+cin >> a;
+int x = -1;
+x = s1.find(a);
+cout<<"Find->";
+cout << x << endl;
+
+8、补充
+1 .string的定义和初始化：
+（1）string s1; —> // 默认初始化，s1是一个空字符串
+（2）string s2 = s1; —> // s2是s1的副本，注意s2只是与s1的值相同，并不指向同一段地址
+（3）string s3 = "hiya"; —> // s3是该字符串字面值的副本
+（4）string s4(10, 'c'); —> // s4的内容是: “cccccccccc”
 
 
 
