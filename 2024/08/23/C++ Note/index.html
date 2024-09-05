@@ -24,7 +24,7 @@
 <meta property="og:description" content="map原理：红黑树    头文件  #include   创建12std::map&lt;KeyType, ValueType&gt; mapName;  std::map&lt;KeyType, ValueType&gt; mapName&#x3D; &#123;&#123;1, &quot;one&quot;&#125;,&#123;2, &quot;two&quot;&#125;&#125;;   插">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-08-23T09:36:00.000Z">
-<meta property="article:modified_time" content="2024-09-04T12:36:08.365Z">
+<meta property="article:modified_time" content="2024-09-05T16:31:29.300Z">
 <meta property="article:author" content="Saulstavo">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary_large_image">
@@ -220,7 +220,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.4k 字
+          2.3k 字
         
       </span>
     
@@ -231,7 +231,7 @@
         
         
         
-          12 分钟
+          20 分钟
         
       </span>
     
@@ -325,7 +325,55 @@
 <p>stk.sort(); &#x2F;&#x2F; 默认根据元素值进行升序排序</p>
 <p>size_t size &#x3D; stk.size(); &#x2F;&#x2F; 获取stack中的元素数量</p>
 <p>size_t capacity &#x3D; stk.capacity(); &#x2F;&#x2F; 获取stack的容量</p>
-<h4 id="vector"><a href="#vector" class="headerlink" title="vector"></a>vector</h4>
+<h4 id="vector"><a href="#vector" class="headerlink" title="vector"></a>vector</h4><ul>
+<li><p>复制<br>vector<T> v2(v1); &#x2F;&#x2F;v2中包含v1所有元素的副本<br>vector<T> v2&#x3D;v1; &#x2F;&#x2F;等价于v2(v1)</p>
+</li>
+<li><p>初始化定义<br>vector<int> a(10, 1) ; &#x2F;&#x2F;定义一个初始大小为 10 且初始值都为 1 的向量</p>
+</li>
+</ul>
+<p>v.size() &#x2F;&#x2F;返回向量v中的元素个数</p>
+<p>v.empty() &#x2F;&#x2F;若v中不包含任何元素，返回真；否则返回假</p>
+<p>v.push_back(t) &#x2F;&#x2F;向v的尾端添加一个值为t的元素</p>
+<p>v.front() &#x2F;&#x2F;访问v的第一个元素</p>
+<p>v.back() &#x2F;&#x2F;访问v的最后一个元素</p>
+<p>push_back() &#x2F;&#x2F;把传送为参数的对象添加到vector的尾部</p>
+<p>pop_back() &#x2F;&#x2F;删除vector尾最后一个元素</p>
+<p>v.erase(v.begin()) &#x2F;&#x2F;将起始位置的元素删除</p>
+<p>v.erase(v.begin(), v.begin()+3) &#x2F;&#x2F;将(v.begin(), v.begin()+3)之间的3个元素删除</p>
+<p>v.erase(v.begin() + 3) &#x2F;&#x2F;删除第4个元素</p>
+<p>clear() &#x2F;&#x2F;清除所有元素</p>
+<p>insert() &#x2F;&#x2F;插入一个或多个对象</p>
+<p>v.insert(v.begin(), 1000); &#x2F;&#x2F;将1000插入到向量v的起始位置前</p>
+<p>v.insert(v.begin() + 1,9); &#x2F;&#x2F;在第二个位置插入新元素</p>
+<p>v.insert(v.begin(), 3, 1000) &#x2F;&#x2F;位置0开始，连续插入3个1000</p>
+<p>v.insert(v.begin()+1, 7,8) &#x2F;&#x2F;位置1开始，连续插入7个8</p>
+<h4 id="string-1"><a href="#string-1" class="headerlink" title="string"></a>string</h4><ol>
+<li><p>在字符串指定位置插入字符</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c++">string s = <span class="hljs-string">&quot;123&quot;</span>;<br>    s.<span class="hljs-built_in">insert</span>(<span class="hljs-number">0</span>,<span class="hljs-string">&quot;@&quot;</span>);<span class="hljs-comment">//第一个参数是插入的位置下标，第二个是插入的字符串</span><br>    s.<span class="hljs-built_in">insert</span>(<span class="hljs-number">1</span>,<span class="hljs-string">&quot;###&quot;</span>);<br>cout &lt;&lt; s &lt;&lt; endl;<br></code></pre></td></tr></table></figure>
+<p>输出：@###123</p>
+</li>
+<li><p>删除字符串中的所有指定字符</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-type">int</span> i=s.<span class="hljs-built_in">find</span>(x);<br> <span class="hljs-keyword">while</span>(i!=string::npos)<span class="hljs-comment">//-1</span><br> &#123;<br>     s.<span class="hljs-built_in">erase</span>(i,x.<span class="hljs-built_in">length</span>());<br>     i=s.<span class="hljs-built_in">find</span>(x);<br> &#125;<br><span class="hljs-function">string&amp; <span class="hljs-title">erase</span><span class="hljs-params">(<span class="hljs-type">size_t</span> pos=<span class="hljs-number">0</span>, <span class="hljs-type">size_t</span> len = npos)</span></span>;<br></code></pre></td></tr></table></figure></li>
+</ol>
+<p>其中，参数pos表示要删除字符串的起始位置，其默认值是0；len表示要删除字符串的长度，其默认值是string::npos。返回值是删除后的字符串。</p>
+<ol start="3">
+<li><p>替换字符串中的所有指定字符<br>法一、for循环直接赋值</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k=<span class="hljs-number">0</span>;k&lt;s.<span class="hljs-built_in">length</span>();k++)<br>     <span class="hljs-keyword">if</span>(s[k]==x)<br>         s[k]=y;<br> cout&lt;&lt;<span class="hljs-string">&quot;Replace-&gt;&quot;</span>&lt;&lt;s&lt;&lt;endl;<br></code></pre></td></tr></table></figure>
+<p>法二、algorithm里面的replace函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c++">string s = <span class="hljs-string">&quot;121145&quot;</span>;<br>    <span class="hljs-comment">//char a = &#x27;1&#x27;;</span><br>    <span class="hljs-built_in">replace</span>(s.<span class="hljs-built_in">begin</span>(), s.<span class="hljs-built_in">end</span>(), <span class="hljs-string">&#x27;1&#x27;</span>, <span class="hljs-string">&#x27;#&#x27;</span>);<br>    cout &lt;&lt; s &lt;&lt; endl;<br></code></pre></td></tr></table></figure></li>
+<li><p>输出字符串的长度<br>s.length();<br>s.size();</p>
+</li>
+<li><p>反转输出字符串（这一步仅输出，不改变字符串）<br>法一、for循环输出</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k=s.<span class="hljs-built_in">length</span>()<span class="hljs-number">-1</span>;k&gt;=<span class="hljs-number">0</span>;k--)<br>     cout&lt;&lt;s[k];<br> cout&lt;&lt;endl;<br></code></pre></td></tr></table></figure>
+<p>法二、reverse函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function">string <span class="hljs-title">s2</span><span class="hljs-params">(s1)</span></span>;<br><span class="hljs-built_in">reverse</span>(s2.<span class="hljs-built_in">begin</span>(), s2.<span class="hljs-built_in">end</span>());<span class="hljs-comment">//头文件是不是也在算法里面？</span><br>cout &lt;&lt; s2 &lt;&lt; endl;<br></code></pre></td></tr></table></figure></li>
+</ol>
+<p>6、输出字符串从位置i到j的子串<br>法一、for循环<br>cin&gt;&gt;i&gt;&gt;j;<br>cout&lt;&lt;”Sub-&gt;”;<br>for(int k&#x3D;i;k&lt;&#x3D;j;k++)<br>     cout&lt;&lt;s[k];<br> cout&lt;&lt;endl;</p>
+<p>法二、substr函数<br>int a, b;<br>cin &gt;&gt; a;<br>cin &gt;&gt; b;</p>
+<p>string t &#x3D; s1.substr(a, b-a+1);<br>cout&lt;&lt;”Sub-&gt;”;<br>cout &lt;&lt; t &lt;&lt; endl;<br>7、匹配子串，输出首次匹配到子串的第一个字符位置<br>法一、手动输出-1<br>cin&gt;&gt;st;&#x2F;&#x2F;string st<br>if(s.find(st)!&#x3D;string::npos)<br>     cout&lt;&lt;”Find-&gt;”&lt;&lt;s.find(st)&lt;&lt;endl;<br>else<br>     cout&lt;&lt;”Find-&gt;-1”&lt;&lt;endl;<br>cout&lt;&lt;endl;</p>
+<p>法二、find没匹配到会自己变成-1<br>string a;<br>cin &gt;&gt; a;<br>int x &#x3D; -1;<br>x &#x3D; s1.find(a);<br>cout&lt;&lt;”Find-&gt;”;<br>cout &lt;&lt; x &lt;&lt; endl;</p>
+<p>8、补充<br>1 .string的定义和初始化：<br>（1）string s1; —&gt; &#x2F;&#x2F; 默认初始化，s1是一个空字符串<br>（2）string s2 &#x3D; s1; —&gt; &#x2F;&#x2F; s2是s1的副本，注意s2只是与s1的值相同，并不指向同一段地址<br>（3）string s3 &#x3D; “hiya”; —&gt; &#x2F;&#x2F; s3是该字符串字面值的副本<br>（4）string s4(10, ‘c’); —&gt; &#x2F;&#x2F; s4的内容是: “cccccccccc”</p>
+
                 
               </div>
             
