@@ -1,0 +1,779 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/cat.png">
+  <link rel="icon" href="/img/cat.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Saulstavo">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="map原理：红黑树    头文件  #include   创建12std::map&lt;KeyType, ValueType&gt; mapName;  std::map&lt;KeyType, ValueType&gt; mapName&#x3D; &#123;&#123;1, &quot;one&quot;&#125;,&#123;2, &quot;two&quot;&#125;&#125;;   插">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++常用语法">
+<meta property="og:url" content="https://blog.saulstavo.com/2024/08/23/C++%20Note/index.html">
+<meta property="og:site_name" content="Saulstavo">
+<meta property="og:description" content="map原理：红黑树    头文件  #include   创建12std::map&lt;KeyType, ValueType&gt; mapName;  std::map&lt;KeyType, ValueType&gt; mapName&#x3D; &#123;&#123;1, &quot;one&quot;&#125;,&#123;2, &quot;two&quot;&#125;&#125;;   插">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-08-23T09:36:00.000Z">
+<meta property="article:modified_time" content="2024-11-07T12:36:39.253Z">
+<meta property="article:author" content="Saulstavo">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>C++常用语法 - Saulstavo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.saulstavo.com","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Saulstavo</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="C++常用语法"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-08-23 17:36" pubdate>
+          2024年8月23日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          20 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">C++常用语法</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h4 id="map"><a href="#map" class="headerlink" title="map"></a>map</h4><p>原理：红黑树  </p>
+<ul>
+<li>头文件</li>
+</ul>
+<p>#include <map></p>
+<ul>
+<li>创建<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c++">std::map&lt;KeyType, ValueType&gt; mapName;  <br>std::map&lt;KeyType, ValueType&gt; mapName= &#123;&#123;<span class="hljs-number">1</span>, <span class="hljs-string">&quot;one&quot;</span>&#125;,&#123;<span class="hljs-number">2</span>, <span class="hljs-string">&quot;two&quot;</span>&#125;&#125;;  <br></code></pre></td></tr></table></figure></li>
+<li>插入元素<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 使用insert方法</span><br>myMap.<span class="hljs-built_in">insert</span>(std::<span class="hljs-built_in">pair</span>&lt;<span class="hljs-type">int</span>, std::string&gt;(<span class="hljs-number">1</span>, <span class="hljs-string">&quot;one&quot;</span>));<br>myMap.<span class="hljs-built_in">insert</span>(std::<span class="hljs-built_in">make_pair</span>(<span class="hljs-number">2</span>, <span class="hljs-string">&quot;two&quot;</span>));<br><span class="hljs-comment">// 使用下标运算符</span><br>myMap[<span class="hljs-number">3</span>] = <span class="hljs-string">&quot;three&quot;</span>;<br></code></pre></td></tr></table></figure></li>
+<li>访问<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 使用下标运算符</span><br>std::cout &lt;&lt; myMap[<span class="hljs-number">1</span>] &lt;&lt; std::endl;<br><span class="hljs-comment">// 使用迭代器</span><br><span class="hljs-keyword">for</span> (<span class="hljs-type">const</span> <span class="hljs-keyword">auto</span>&amp; pair : myMap) &#123;<br>    std::cout &lt;&lt; pair.first &lt;&lt; <span class="hljs-string">&quot; -&gt; &quot;</span> &lt;&lt; pair.second &lt;&lt; std::endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+如果在使用迭代器时想记录循环次数，可以另外加变量解决  </li>
+<li>查找<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 使用find方法，返回一个迭代器指向找到的元素，如果没有找到，则返回map::end</span><br>std::map&lt;<span class="hljs-type">int</span>, std::string&gt;::iterator it = myMap.<span class="hljs-built_in">find</span>(<span class="hljs-number">1</span>);<br><span class="hljs-keyword">if</span> (it != myMap.<span class="hljs-built_in">end</span>()) &#123;<br>    <span class="hljs-comment">// 找到了元素</span><br>    std::cout &lt;&lt; <span class="hljs-string">&quot;Found: &quot;</span> &lt;&lt; it-&gt;first &lt;&lt; <span class="hljs-string">&quot; -&gt; &quot;</span> &lt;&lt; it-&gt;second &lt;&lt; std::endl;<br>&#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-comment">// 没有找到元素</span><br>    std::cout &lt;&lt; <span class="hljs-string">&quot;Element not found&quot;</span> &lt;&lt; std::endl;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li>排序</li>
+</ul>
+<ol>
+<li>结构体运算符重载<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span> <span class="hljs-title class_">node</span>&#123;<br>	<span class="hljs-type">int</span> score;<br>	string name;<br>	<span class="hljs-type">bool</span> <span class="hljs-keyword">operator</span> &lt;(<span class="hljs-type">const</span> node &amp;s)<span class="hljs-type">const</span>&#123;<br>		<span class="hljs-keyword">if</span>(score!=s.score)<span class="hljs-keyword">return</span> score&gt;s.score;<br>        <span class="hljs-keyword">return</span> name&gt;s.name;<br>	&#125;<br>&#125;node;<br></code></pre></td></tr></table></figure></li>
+<li>修改map排序规则<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 自定义比较函数对象</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Rule</span> &#123;<br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">operator</span><span class="hljs-params">()</span><span class="hljs-params">(<span class="hljs-type">const</span> std::string&amp; a, <span class="hljs-type">const</span> std::string&amp; b)</span> <span class="hljs-type">const</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> a.<span class="hljs-built_in">length</span>() &lt; b.<span class="hljs-built_in">length</span>(); <span class="hljs-comment">// 按字符串长度升序排序</span><br>    &#125;<br>&#125;;<br>std::map&lt;std::string, <span class="hljs-type">int</span>, Rule&gt; myMap; <span class="hljs-comment">// 定义时候最后加上规则</span><br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>基于红黑树，本身map中的key就是有序的。查找key的效率O(logn)</p>
+</blockquote>
+</li>
+</ol>
+<h4 id="unordered-map"><a href="#unordered-map" class="headerlink" title="unordered_map"></a>unordered_map</h4><p>原理：哈希表<br>查找插入删除效率：O(1)，比基于红黑树的map的效率O(logn)更快<br><strong>所有操作同map</strong>  </p>
+<blockquote>
+<p>std::unordered_map 本身并不是排序的，它的元素是通过哈希函数存储在哈希表中的，而不是按照键的顺序排列。因此，如果想按照键的顺序遍历，需要使用map  </p>
+</blockquote>
+<h4 id="运算符重载"><a href="#运算符重载" class="headerlink" title="运算符重载"></a>运算符重载</h4><p>有多种方法，建议写到结构体或类内部</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span> <span class="hljs-title class_">node</span>&#123;<br>	<span class="hljs-type">int</span> score;<br>	string name;<br>	<span class="hljs-type">bool</span> <span class="hljs-keyword">operator</span> &lt;(<span class="hljs-type">const</span> node &amp;s)<span class="hljs-type">const</span>&#123;<br>		<span class="hljs-keyword">if</span>(score!=s.score)<span class="hljs-keyword">return</span> score&gt;s.score;<br>        <span class="hljs-keyword">return</span> name&gt;s.name;<br>	&#125;<br>&#125;node;<br></code></pre></td></tr></table></figure>
+<p><strong>对于A operator+(const A&amp; a)const {…}而言</strong><br>const A&amp; a：<br>这是函数的参数列表，其中 a 是一个引用参数，类型为 A 的常量引用。const 关键字表示在函数内部不能修改 a 引用的对象。使用引用而不是值传递可以避免不必要的对象拷贝，提高效率。<br>const：<br>这个 const 出现在参数列表后面，表示这个成员函数不会修改调用它的对象（即 this 指针所指向的对象）。这样的成员函数被称为常量成员函数。  </p>
+<h4 id="string"><a href="#string" class="headerlink" title="string"></a>string</h4><p>字符串，可以当作字符数组访问修改。有时也可以把string作为栈使用。<br>std::string str1 &#x3D; “hello”; std::string str3 &#x3D; str1; &#x2F;&#x2F; 复制 str1 中的内容到 str3  </p>
+<ul>
+<li>查找<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 查找子串首次出现的位置, size_t有的在#include&lt;cstddef&gt;，有的本来就有</span><br><span class="hljs-type">size_t</span> pos = str.<span class="hljs-built_in">find</span>(<span class="hljs-string">&quot;C++&quot;</span>);<br><span class="hljs-keyword">if</span> (pos != std::string::npos) <span class="hljs-comment">//如果找到就打印 ，==npos就是找不到</span><br>&#123;    <br>    std::cout &lt;&lt; <span class="hljs-string">&quot;&#x27;C++&#x27; found at position: &quot;</span> &lt;&lt; pos &lt;&lt; std::endl;<br>&#125; <br><span class="hljs-keyword">else</span> &#123;<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;&#x27;C++&#x27; not found.&quot;</span> &lt;&lt; std::endl;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li>子串<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 提取子字符串</span><br>std::string sub = str.<span class="hljs-built_in">substr</span>(pos, <span class="hljs-number">3</span>); <span class="hljs-comment">// 从位置 pos 开始，提取 3 个字符</span><br>std::cout &lt;&lt; <span class="hljs-string">&quot;Substring extracted: &quot;</span> &lt;&lt; sub &lt;&lt; std::endl;<br></code></pre></td></tr></table></figure></li>
+<li>替换<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 替换字符串中的某些部分</span><br>str.<span class="hljs-built_in">replace</span>(pos, <span class="hljs-number">3</span>, <span class="hljs-string">&quot;Java&quot;</span>); <span class="hljs-comment">// 用 &quot;Java&quot; 替换 &quot;C++&quot;</span><br>std::cout &lt;&lt; <span class="hljs-string">&quot;String after replace: &quot;</span> &lt;&lt; str &lt;&lt; std::endl;<br></code></pre></td></tr></table></figure></li>
+<li>插入<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 在指定位置插入字符串</span><br>str.<span class="hljs-built_in">insert</span>(<span class="hljs-number">7</span>, <span class="hljs-string">&quot;beautiful &quot;</span>); <span class="hljs-comment">// 在位置 7 插入 &quot;beautiful &quot;</span><br>std::cout &lt;&lt; <span class="hljs-string">&quot;String after insert: &quot;</span> &lt;&lt; str &lt;&lt; std::endl;<br></code></pre></td></tr></table></figure></li>
+<li>删除<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 删除字符串中的某些部分</span><br>str.<span class="hljs-built_in">erase</span>(<span class="hljs-number">7</span>, <span class="hljs-number">10</span>); <span class="hljs-comment">// 从位置 7 开始，删除 10 个字符</span><br>std::cout &lt;&lt; <span class="hljs-string">&quot;String after erase: &quot;</span> &lt;&lt; str &lt;&lt; std::endl;<br></code></pre></td></tr></table></figure></li>
+<li>获取长度<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 获取字符串长度</span><br>std::cout &lt;&lt; <span class="hljs-string">&quot;String length: &quot;</span> &lt;&lt; str.<span class="hljs-built_in">size</span>() &lt;&lt; std::endl;<br></code></pre></td></tr></table></figure></li>
+<li>比较字符串<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 比较两个字符串</span><br>std::string str2 = <span class="hljs-string">&quot;Hello, World!&quot;</span>;<br><span class="hljs-type">int</span> result = str.<span class="hljs-built_in">compare</span>(str2); <span class="hljs-comment">//此函数的功能和C语言的strcmp（）一样，但用法有差异</span><br><span class="hljs-keyword">if</span> (result == <span class="hljs-number">0</span>) &#123;<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;str is equal to str2&quot;</span> &lt;&lt; std::endl;<br>&#125; <br><span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (result &lt; <span class="hljs-number">0</span>) <br>&#123;<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;str is less than str2&quot;</span> &lt;&lt; std::endl;<br>&#125; <br><span class="hljs-keyword">else</span> <br>&#123;<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;str is greater than str2&quot;</span> &lt;&lt; std::endl;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li>追加<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 在字符串末尾追加内容</span><br>str.<span class="hljs-built_in">append</span>(<span class="hljs-string">&quot; Welcome!&quot;</span>); <span class="hljs-comment">//此函数实现得有些冗余，其实+=和这个函数实现的效果完全一样（个人更喜欢用+= 简单）</span><br>std::cout &lt;&lt; <span class="hljs-string">&quot;String after append: &quot;</span> &lt;&lt; str &lt;&lt; std::endl;<br></code></pre></td></tr></table></figure></li>
+<li>使用迭代器遍历&#x2F;修改<br>迭代器的底层还是指针  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 修改字符串中的字符</span><br><span class="hljs-keyword">for</span> (string::iterator it = str.<span class="hljs-built_in">begin</span>(); it != str.<span class="hljs-built_in">end</span>(); ++it) &#123;<br>    <span class="hljs-keyword">if</span> (*it == <span class="hljs-string">&#x27;C&#x27;</span>) &#123;<br>        *it = <span class="hljs-string">&#x27;D&#x27;</span>;  <span class="hljs-comment">// 修改 &#x27;C&#x27; 为 &#x27;D&#x27;</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="set和unordered-set"><a href="#set和unordered-set" class="headerlink" title="set和unordered_set"></a>set和unordered_set</h4><p>类似于map和unordered_map，set底层是红黑树，查找插入删除效率O(logn)，unordered_set底层是哈希表，查找插入删除效率O(1).  </p>
+<blockquote>
+<p>此外，对于map和set，可以用count来代替find</p>
+</blockquote>
+<h4 id="stack"><a href="#stack" class="headerlink" title="stack"></a>stack</h4><p>std::stack<int> stk(10, 0); &#x2F;&#x2F; 创建一个包含10个0的stack</p>
+<p>int top &#x3D; stk.top(); &#x2F;&#x2F; 获取stack顶部的元素</p>
+<p>bool empty &#x3D; stk.empty(); &#x2F;&#x2F; 检查stack是否为空</p>
+<p>stk.push(42); &#x2F;&#x2F; 在stack的顶部添加一个元素</p>
+<p>stk.push(42); &#x2F;&#x2F; 在stack的顶部添加一个元素</p>
+<p>stk.pop(); &#x2F;&#x2F; 删除stack顶部的元素</p>
+<p>stk.top() &#x3D; 42; &#x2F;&#x2F; 修改stack顶部的元素</p>
+<p>bool contains &#x3D; stk.contains(42); &#x2F;&#x2F; 检查stack中是否包含值为42的元素</p>
+<p>stk.sort(); &#x2F;&#x2F; 默认根据元素值进行升序排序</p>
+<p>size_t size &#x3D; stk.size(); &#x2F;&#x2F; 获取stack中的元素数量</p>
+<p>size_t capacity &#x3D; stk.capacity(); &#x2F;&#x2F; 获取stack的容量</p>
+<h4 id="vector"><a href="#vector" class="headerlink" title="vector"></a>vector</h4><ul>
+<li><p>复制<br>vector<T> v2(v1); &#x2F;&#x2F;v2中包含v1所有元素的副本<br>vector<T> v2&#x3D;v1; &#x2F;&#x2F;等价于v2(v1)</p>
+</li>
+<li><p>初始化定义<br>vector<int> a(10, 1) ; &#x2F;&#x2F;定义一个初始大小为 10 且初始值都为 1 的向量</p>
+</li>
+</ul>
+<p>v.size() &#x2F;&#x2F;返回向量v中的元素个数</p>
+<p>v.empty() &#x2F;&#x2F;若v中不包含任何元素，返回真；否则返回假</p>
+<p>v.push_back(t) &#x2F;&#x2F;向v的尾端添加一个值为t的元素</p>
+<p>v.front() &#x2F;&#x2F;访问v的第一个元素</p>
+<p>v.back() &#x2F;&#x2F;访问v的最后一个元素</p>
+<p>push_back() &#x2F;&#x2F;把传送为参数的对象添加到vector的尾部</p>
+<p>pop_back() &#x2F;&#x2F;删除vector尾最后一个元素</p>
+<p>v.erase(v.begin()) &#x2F;&#x2F;将起始位置的元素删除</p>
+<p>v.erase(v.begin(), v.begin()+3) &#x2F;&#x2F;将(v.begin(), v.begin()+3)之间的3个元素删除</p>
+<p>v.erase(v.begin() + 3) &#x2F;&#x2F;删除第4个元素</p>
+<p>clear() &#x2F;&#x2F;清除所有元素</p>
+<p>insert() &#x2F;&#x2F;插入一个或多个对象</p>
+<p>v.insert(v.begin(), 1000); &#x2F;&#x2F;将1000插入到向量v的起始位置前</p>
+<p>v.insert(v.begin() + 1,9); &#x2F;&#x2F;在第二个位置插入新元素</p>
+<p>v.insert(v.begin(), 3, 1000) &#x2F;&#x2F;位置0开始，连续插入3个1000</p>
+<p>v.insert(v.begin()+1, 7,8) &#x2F;&#x2F;位置1开始，连续插入7个8</p>
+<h4 id="string-1"><a href="#string-1" class="headerlink" title="string"></a>string</h4><ol>
+<li><p>在字符串指定位置插入字符</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c++">string s = <span class="hljs-string">&quot;123&quot;</span>;<br>    s.<span class="hljs-built_in">insert</span>(<span class="hljs-number">0</span>,<span class="hljs-string">&quot;@&quot;</span>);<span class="hljs-comment">//第一个参数是插入的位置下标，第二个是插入的字符串</span><br>    s.<span class="hljs-built_in">insert</span>(<span class="hljs-number">1</span>,<span class="hljs-string">&quot;###&quot;</span>);<br>cout &lt;&lt; s &lt;&lt; endl;<br></code></pre></td></tr></table></figure>
+<p>输出：@###123</p>
+</li>
+<li><p>删除字符串中的所有指定字符</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-type">int</span> i=s.<span class="hljs-built_in">find</span>(x);<br> <span class="hljs-keyword">while</span>(i!=string::npos)<span class="hljs-comment">//-1</span><br> &#123;<br>     s.<span class="hljs-built_in">erase</span>(i,x.<span class="hljs-built_in">length</span>());<br>     i=s.<span class="hljs-built_in">find</span>(x);<br> &#125;<br><span class="hljs-function">string&amp; <span class="hljs-title">erase</span><span class="hljs-params">(<span class="hljs-type">size_t</span> pos=<span class="hljs-number">0</span>, <span class="hljs-type">size_t</span> len = npos)</span></span>;<br></code></pre></td></tr></table></figure></li>
+</ol>
+<p>其中，参数pos表示要删除字符串的起始位置，其默认值是0；len表示要删除字符串的长度，其默认值是string::npos。返回值是删除后的字符串。</p>
+<ol start="3">
+<li><p>替换字符串中的所有指定字符<br>法一、for循环直接赋值</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k=<span class="hljs-number">0</span>;k&lt;s.<span class="hljs-built_in">length</span>();k++)<br>     <span class="hljs-keyword">if</span>(s[k]==x)<br>         s[k]=y;<br> cout&lt;&lt;<span class="hljs-string">&quot;Replace-&gt;&quot;</span>&lt;&lt;s&lt;&lt;endl;<br></code></pre></td></tr></table></figure>
+<p>法二、algorithm里面的replace函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c++">string s = <span class="hljs-string">&quot;121145&quot;</span>;<br>    <span class="hljs-comment">//char a = &#x27;1&#x27;;</span><br>    <span class="hljs-built_in">replace</span>(s.<span class="hljs-built_in">begin</span>(), s.<span class="hljs-built_in">end</span>(), <span class="hljs-string">&#x27;1&#x27;</span>, <span class="hljs-string">&#x27;#&#x27;</span>);<br>    cout &lt;&lt; s &lt;&lt; endl;<br></code></pre></td></tr></table></figure></li>
+<li><p>输出字符串的长度<br>s.length();<br>s.size();</p>
+</li>
+<li><p>反转输出字符串（这一步仅输出，不改变字符串）<br>法一、for循环输出</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k=s.<span class="hljs-built_in">length</span>()<span class="hljs-number">-1</span>;k&gt;=<span class="hljs-number">0</span>;k--)<br>     cout&lt;&lt;s[k];<br> cout&lt;&lt;endl;<br></code></pre></td></tr></table></figure>
+<p>法二、reverse函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function">string <span class="hljs-title">s2</span><span class="hljs-params">(s1)</span></span>;<br><span class="hljs-built_in">reverse</span>(s2.<span class="hljs-built_in">begin</span>(), s2.<span class="hljs-built_in">end</span>());<span class="hljs-comment">//头文件是不是也在算法里面？</span><br>cout &lt;&lt; s2 &lt;&lt; endl;<br></code></pre></td></tr></table></figure></li>
+</ol>
+<p>6、输出字符串从位置i到j的子串<br>法一、for循环<br>cin&gt;&gt;i&gt;&gt;j;<br>cout&lt;&lt;”Sub-&gt;”;<br>for(int k&#x3D;i;k&lt;&#x3D;j;k++)<br>     cout&lt;&lt;s[k];<br> cout&lt;&lt;endl;</p>
+<p>法二、substr函数<br>int a, b;<br>cin &gt;&gt; a;<br>cin &gt;&gt; b;</p>
+<p>string t &#x3D; s1.substr(a, b-a+1);<br>cout&lt;&lt;”Sub-&gt;”;<br>cout &lt;&lt; t &lt;&lt; endl;<br>7、匹配子串，输出首次匹配到子串的第一个字符位置<br>法一、手动输出-1<br>cin&gt;&gt;st;&#x2F;&#x2F;string st<br>if(s.find(st)!&#x3D;string::npos)<br>     cout&lt;&lt;”Find-&gt;”&lt;&lt;s.find(st)&lt;&lt;endl;<br>else<br>     cout&lt;&lt;”Find-&gt;-1”&lt;&lt;endl;<br>cout&lt;&lt;endl;</p>
+<p>法二、find没匹配到会自己变成-1<br>string a;<br>cin &gt;&gt; a;<br>int x &#x3D; -1;<br>x &#x3D; s1.find(a);<br>cout&lt;&lt;”Find-&gt;”;<br>cout &lt;&lt; x &lt;&lt; endl;</p>
+<p>8、补充<br>1 .string的定义和初始化：<br>（1）string s1; —&gt; &#x2F;&#x2F; 默认初始化，s1是一个空字符串<br>（2）string s2 &#x3D; s1; —&gt; &#x2F;&#x2F; s2是s1的副本，注意s2只是与s1的值相同，并不指向同一段地址<br>（3）string s3 &#x3D; “hiya”; —&gt; &#x2F;&#x2F; s3是该字符串字面值的副本<br>（4）string s4(10, ‘c’); —&gt; &#x2F;&#x2F; s4的内容是: “cccccccccc”</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" class="category-chain-item">编程语言</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/C/" class="print-no-link">#C++</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>C++常用语法</div>
+      <div>https://blog.saulstavo.com/2024/08/23/C++ Note/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Saulstavo</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年8月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/10/07/AI%20notes/" title="AI notes">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">AI notes</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/12/23/post/" title="博客开篇：关于这座岛">
+                        <span class="hidden-mobile">博客开篇：关于这座岛</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"6tb3JT579T9IJ4riuZTIbXnI-MdYXbMMI","appKey":"tsXAVg0ffH5Jg71GrYB7K8o1","path":"window.location.pathname","placeholder":"评论时输入邮箱（仅作者可见）以接收回复","avatar":"","meta":["nick","mail"],"requiredFields":["nick"],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://6tb3jt57.api.lncldglobal.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      Constructed by © Saulstavo
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
